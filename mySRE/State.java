@@ -13,6 +13,13 @@ public class State
   String status; /// a-z, "split", "final"
   State nextFirst, nextSecond; /// max two next states in case of a split
 
+  public State()
+  {
+    status = null;
+    nextFirst = null;
+    nextSecond = null;
+  }
+
   public State(String status)
   {
     this.status = status;

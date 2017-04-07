@@ -81,11 +81,23 @@ public class RegexProcessor
           operators.push(c);
           break;
         case ')':
-          while(!operators.peek().equals('('))
+          while(!operators.empty())
           {
-            result += operators.pop();
+            if (!operators.peek().equals('('))
+            {
+              result += operators.pop();
+            }
+            else
+            {
+              break;
+            }
           }
-          operators.pop(); // Remove parenthesis
+          if (operators.empty())
+          {
+            System.err.println("Unbalanced parentheses in regex!!");
+            System.exit(-1);
+          }
+          operators.pop(); // Remove left parenthesis
           break;
         default:
           while(!operators.empty())
@@ -108,6 +120,11 @@ public class RegexProcessor
     }
     while (!operators.empty())
     {
+      if (operators.peek().equals('('))
+      {
+        System.err.println("Unbalanced parentheses in regex!!");
+        System.exit(-1);
+      }
       result += operators.pop();
     }
 

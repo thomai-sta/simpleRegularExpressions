@@ -1,10 +1,11 @@
 // Simple Regular Expressions
 //
-// The simple regular expressions (SRE) we are here concerned with here are a subset
-// of the regular expressions implemented in most modern programming languages.
+// The simple regular expressions (SRE) we are here concerned with here are a
+// subset of the regular expressions implemented in most modern programming
+// languages.
 // They can be specified using only the following characters:
 //   - 'a' 'b' 'c' ... 'z' (the 26 lower-case latin letters)
-//   - '*'      : for expressing zero of more matches of the preceding expression
+//   - '*'      : for zero or more matches of the preceding expression
 //   - '|'      : for alternative expressions
 //   - '(' ')'  : for grouping expressions
 //
@@ -16,16 +17,6 @@
 //   a*(b|c)* matches the empty string, a, ab, aaaac, b, c, abbcb, ...
 //   ((((a)))) matches a
 //   ((((a))*)) matches the empty string, a, aa, ...
-//
-// We call the set of strings, matching a given expression, its language.
-//
-// The task is to implement a method to check if a given string is in the language
-// of a given expression.
-//
-// The solution must be implemented using Java SE (any version is acceptable).
-// It may not be implemented in terms of the java.util.regex package,
-// the method String.matches(String), nor any external library providing similar functionality.
-// It may span multiple classes and files.
 
 package mySRE;
 
@@ -210,10 +201,14 @@ public final class SRE
     states.add(start);
     consumed.add(0);
 
+    State currentState = new State();
+    int consumedChars;
+    Character c;
+
     while(states.size() != 0)
     {
-      State currentState = states.poll();
-      int consumedChars = consumed.poll();
+      currentState = states.poll();
+      consumedChars = consumed.poll();
 
       if (currentState.status.equals("split"))
       {
@@ -233,7 +228,7 @@ public final class SRE
         /// We are at a letter state
         if (consumedChars < s.length())
         {
-          Character c = s.charAt(consumedChars);
+          c = s.charAt(consumedChars);
           if (currentState.status.equals(String.valueOf(c)))
           {
             states.add(currentState.nextFirst);   /// Only split states have two next

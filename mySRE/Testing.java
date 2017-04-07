@@ -23,15 +23,24 @@ public class Testing
 
       for (int i = 1; i < args.length; i++)
       {
-        if (tester.matches(args[i]))
+        if (!args[i].equals(args[i].toLowerCase()))
         {
-          if (args[i].length() == 0)
+          /// A bit useless. If the string contains uppercase, it will not be
+          /// matched anyway
+          System.err.println("Ignoring " + args[i]);
+        }
+        else
+        {
+          if (tester.matches(args[i]))
           {
-            matched.add("the empty string");
-          }
-          else
-          {
-            matched.add(args[i]);
+            if (args[i].length() == 0)
+            {
+              matched.add("the empty string");
+            }
+            else
+            {
+              matched.add(args[i]);
+            }
           }
         }
       }
